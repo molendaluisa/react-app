@@ -8,6 +8,10 @@ export default function App() {
   return (
     <div className="App">
       <Weather />
+
+      <footer>
+      <a href="https://github.com/molendaluisa/react-app">Open-source code </a>by Luisa Molenda
+      </footer>
     </div>
   );
 }
