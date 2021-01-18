@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FormatDate from "./FormatDate";
 import "./Weather.css";
 
 
@@ -15,13 +16,16 @@ export default function Weather() {
     setWeatherData({
       loaded: true,
       name: response.data.name,
+      date : new Date((response.data.dt + response.data.timezone) *1000),
       temp: response.data.main.temp,
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       description: response.data.weather[0].description,
       tempMin: response.data.main.temp_min,
       tempMax: response.data.main.temp_max,
       wind: response.data.wind.speed,
-      humidity: response.data.main.humidity
+      humidity: response.data.main.humidity,
+      sunrise : new Date((response.data.sys.sunrise + response.data.timezone) *1000),
+      sunset : new Date((response.data.sys.sunset + response.data.timezone) *1000)
     });
   }
 
@@ -34,7 +38,7 @@ export default function Weather() {
             <div className="col-sm-4 col-12 mt-1">
               <ul>
                 <li>
-                Fri, Dec 30th 12:34
+                <FormatDate date={weatherData.date} type="fulldate" />
                 </li>
                 <li>{weatherData.name}</li>
               </ul>
@@ -88,7 +92,7 @@ export default function Weather() {
                     <span className="wind-unit unit">km/h</span>
                   </div>
                   <div className="col-4">
-                    <span className="sunrise">01:23</span>
+                    <span className="sunrise"><FormatDate date={weatherData.sunrise} type="time" /></span>
                   </div>
                   <div className="col-4 current-label">High</div>
                   <div className="col-4 current-label">Wind</div>
@@ -102,7 +106,7 @@ export default function Weather() {
                     <span className="unit">%</span>
                   </div>
                   <div className="col-4">
-                    <span className="sunset">11:23</span>
+                    <span className="sunset"><FormatDate date={weatherData.sunset} type="time" /></span>
                   </div>
                   <div className="col-4 current-label">Low</div>
                   <div className="col-4 current-label">Humidity</div>
