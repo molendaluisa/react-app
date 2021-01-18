@@ -10,7 +10,7 @@ export default function App() {
     <div className="App">
       <div className="container">
 
-        <Weather />
+        <Weather city="Laguna" />
 
         <footer>
           <a href="https://github.com/molendaluisa/react-app" target="_blank">Open-source code</a> by Luisa Molenda
