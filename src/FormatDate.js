@@ -33,15 +33,19 @@ export default function FormatDate(props) {
     return (
       <div className="FormatDate">
         {hour}:{minute} {weekDay}, {month} {date}{suffix}
-      </div>
-
-    );
+      </div>);
   }
-  else {
+  else if (props.type === "time") {
     return (
       <div className="FormatDate">
         {hour}:{minute}
-      </div>)
-      ;
+      </div>
+      );
+  } else {
+    return (
+      <div className="FormatDate">
+        {weekDay}
+      </div>
+      );
   }
 }

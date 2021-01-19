@@ -1,0 +1,24 @@
+.ForecastInfo .forecast-info .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .ForecastInfo .forecast-day {
+    font-weight: 400;
+    height: 15px;
+    line-height: 15px;
+  }
+  
+  .ForecastInfo .forecast-info img {
+    display: block;
+    margin: 0 auto;
+    height: 48px;
+    width: 48px;
+  }
+  
+  .ForecastInfo .forecast-temperature {
+    font-weight: 400;
+    line-height: 15px;
+  }

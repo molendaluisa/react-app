@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import CurrentInfo from "./CurrentInfo";
 import FormatDate from "./FormatDate";
+import Forecast from "./Forecast";
 import axios from "axios";
 import "./Weather.css";
 
 
+
 export default function Weather(props) {
-  const [weatherData, setWeatherData] = useState({ loaded: false });
+  const [weatherData, setWeatherData] = useState({loaded: false});
   const [city, setCity] = useState(props.city);
+  const [unit, setUnit] = useState({ temp: "C", wind: "km/h" })
 
 
   function handleResponse(response) {
@@ -27,10 +29,10 @@ export default function Weather(props) {
     });
   }
 
-  function apiCall (){
+  function apiCall() {
     const API_KEY = "d2c6c2007a695c29ac92861c649fdb75";
     const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
-    axios.get(API_URL).then(handleResponse);  
+    axios.get(API_URL).then(handleResponse);
   }
 
   function handleSubmit(event) {
@@ -39,6 +41,16 @@ export default function Weather(props) {
   }
   function handleInput(event) {
     setCity(event.target.value);
+  }
+
+  function handleCelsius(event) {
+    event.preventDefault();
+    setUnit({ temp: "C", wind: "km/h" })
+  }
+  function handleFahrenheit(event) {
+    event.preventDefault();
+    setUnit({ temp: "F", wind: "mph" })
+
   }
 
   if (weatherData.loaded) {
@@ -57,9 +69,9 @@ export default function Weather(props) {
             </div>
             <div className="col-sm-2 col-12 mt-1">
               <div className="d-grid gap-2 d-md-block">
-                <button className="btn-unit-selector btn-light btn-sm">°C</button>
+                <button className="btn-unit-selector btn-light btn-sm" onClick={handleCelsius}>°C</button>
               |
-              <button className="btn-unit-selector btn-light btn-sm">°F</button>
+              <button className="btn-unit-selector btn-light btn-sm" onClick={handleFahrenheit}>°F</button>
               </div>
             </div>
             <div className="col-sm-5 col-9 mt-1">
@@ -81,7 +93,54 @@ export default function Weather(props) {
               </button>
             </div>
           </div>
-          <CurrentInfo data={weatherData} />
+          <div className="current-info">
+            <div className="row">
+              <div className="col-sm current-left-side mb-3">
+                <div className="col-md-auto current-icon">
+                  <img src={weatherData.icon} alt={weatherData.description} />
+                </div>
+                <div className="col-md-auto current-temp">
+                  {Math.round(weatherData.temp)}
+                </div>
+                <div className="col-md-auto current-unit temp-unit">
+                  °{unit.temp}
+                </div>
+              </div>
+              <div className="col-sm current-details">
+                <div className="row">
+                  <div className="col-4">
+                    <span className="high-temp">{Math.round(weatherData.tempMax)}</span>
+                    <span className="temp-unit unit">°{unit.temp}</span>
+                  </div>
+                  <div className="col-4">
+                    <span className="wind">{Math.round(weatherData.wind)}</span>
+                    <span className="wind-unit unit">{unit.wind}</span>
+                  </div>
+                  <div className="col-4">
+                    <span className="sunrise"><FormatDate date={weatherData.sunrise} type="time" /></span>
+                  </div>
+                  <div className="col-4 current-label">High</div>
+                  <div className="col-4 current-label">Wind</div>
+                  <div className="col-4 current-label">Sunrise</div>
+                  <div className="col-4">
+                    <span className="low-temp">{Math.round(weatherData.tempMin)}</span>
+                    <span className="temp-unit unit">°{unit.temp}</span>
+                  </div>
+                  <div className="col-4">
+                    <span className="humidity">{weatherData.humidity}</span>
+                    <span className="unit">%</span>
+                  </div>
+                  <div className="col-4">
+                    <span className="sunset"><FormatDate date={weatherData.sunset} type="time" /></span>
+                  </div>
+                  <div className="col-4 current-label">Low</div>
+                  <div className="col-4 current-label">Humidity</div>
+                  <div className="col-4 current-label">Sunset</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Forecast city={weatherData.name} />
         </div>
       </div>
     );
