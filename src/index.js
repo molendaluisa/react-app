@@ -13,7 +13,7 @@ export default function App() {
         <Weather city="Laguna" />
 
         <footer>
-          <a href="https://github.com/molendaluisa/react-app" target="_blank">Open-source code</a> by Luisa Molenda
+          <a href="https://github.com/molendaluisa/react-app" target="_blank" rel="noreferrer" >Open-source code</a> by Luisa Molenda
       </footer>
       </div>
     </div>
